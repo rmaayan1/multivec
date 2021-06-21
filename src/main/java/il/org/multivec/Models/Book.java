@@ -141,6 +141,12 @@ public class Book {
     @Column(name = "Comments")
     private String comments;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Book originalEntry;
+
+    @OneToMany(mappedBy = "originalEntry")
+    private Set<Book> suggestions = new HashSet<>();
+
     public String getHebrewName() {
         return hebrewName;
     }
@@ -331,5 +337,21 @@ public class Book {
 
     public void setComments(String comments) {
         this.comments = comments;
+    }
+
+    public Book getOriginalEntry() {
+        return originalEntry;
+    }
+
+    public void setOriginalEntry(Book originalEntry) {
+        this.originalEntry = originalEntry;
+    }
+
+    public Set<Book> getSuggestions() {
+        return suggestions;
+    }
+
+    public void setSuggestions(Set<Book> suggestions) {
+        this.suggestions = suggestions;
     }
 }

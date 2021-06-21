@@ -2,7 +2,9 @@ package il.org.multivec.Models;
 
 import javax.persistence.*;
 import java.math.BigInteger;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "Nicknames")
@@ -11,14 +13,10 @@ public class Nickname {
     @Column(name = "Nickname_Id")
     private BigInteger id;
 
-    @ManyToOne
-    private Person person;
 
-    public Person getPerson() {
-        return person;
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Nickname originalEntry;
 
-    public void setPerson(Person person) {
-        this.person = person;
-    }
+    @OneToMany(mappedBy = "originalEntry")
+    private Set<Nickname> suggestions = new HashSet<>();
 }

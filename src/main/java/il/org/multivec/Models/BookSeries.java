@@ -2,6 +2,7 @@ package il.org.multivec.Models;
 
 import javax.persistence.*;
 import java.math.BigInteger;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -17,6 +18,12 @@ public class BookSeries {
     @OneToMany(mappedBy = "series")
     private Set<Book> books;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private BookSeries originalEntry;
+
+    @OneToMany(mappedBy = "originalEntry")
+    private Set<BookSeries> suggestions = new HashSet<>();
+
     public String getSeriesName() {
         return seriesName;
     }
@@ -31,5 +38,21 @@ public class BookSeries {
 
     public void setBooks(Set<Book> books) {
         this.books = books;
+    }
+
+    public BookSeries getOriginalEntry() {
+        return originalEntry;
+    }
+
+    public void setOriginalEntry(BookSeries originalEntry) {
+        this.originalEntry = originalEntry;
+    }
+
+    public Set<BookSeries> getSuggestions() {
+        return suggestions;
+    }
+
+    public void setSuggestions(Set<BookSeries> suggestions) {
+        this.suggestions = suggestions;
     }
 }
