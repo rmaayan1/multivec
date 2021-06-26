@@ -9,10 +9,12 @@ import java.util.Set;
 @Table (name = "Persons", indexes = {
         @Index(columnList = "First_Name"),
         @Index(columnList = "Last_Name"),
+        @Index(columnList = "IsDeleted")
 })
 public class Person {
     @Id
     @Column(name = "Person_Id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private BigInteger id;
     @Column(nullable = false, name = "First_Name")
     private String firstName;
@@ -32,14 +34,19 @@ public class Person {
     private Person originalEntry;
     @OneToMany(mappedBy = "originalEntry")
     private Set<Person> suggestions = new HashSet<>();
-
-    @ManyToMany(cascade = { CascadeType.ALL })
+    @ManyToMany(cascade = { CascadeType.MERGE })
     @JoinTable(
             name = "Person_Nickname",
             joinColumns = { @JoinColumn(name = "Person_Id") },
             inverseJoinColumns = { @JoinColumn(name = "Nickname_Id") }
     )
     private Set<Nickname> nicknames = new HashSet<>();
+    @Column(name = "Is_Deleted", nullable = false)
+    private Boolean isDeleted;
+
+    public BigInteger getId() {
+        return id;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -119,5 +126,13 @@ public class Person {
 
     public void setSuggestions(Set<Person> suggestions) {
         this.suggestions = suggestions;
+    }
+
+    public Boolean getDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        isDeleted = deleted;
     }
 }

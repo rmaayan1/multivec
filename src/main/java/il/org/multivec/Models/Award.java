@@ -6,10 +6,14 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "Awards")
+@Table(name = "Awards", indexes = {
+        @Index(columnList = "Award_Name"),
+        @Index(columnList = "IsDeleted")
+})
 public class Award {
     @Id
     @Column(name = "Award_Id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private BigInteger id;
     @Column(name = "Award_Name")
     private String awardName;
@@ -19,6 +23,12 @@ public class Award {
     private Set<Award> suggestions = new HashSet<>();
     @ManyToMany(mappedBy = "awards")
     private Set<Book> awardedBooks = new HashSet<>();
+    @Column(name = "Is_Deleted", nullable = false)
+    private Boolean isDeleted;
+
+    public BigInteger getId() {
+        return id;
+    }
 
     public String getAwardName() {
         return awardName;
@@ -50,5 +60,13 @@ public class Award {
 
     public void setAwardedBooks(Set<Book> awardedBooks) {
         this.awardedBooks = awardedBooks;
+    }
+
+    public Boolean getDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        isDeleted = deleted;
     }
 }
