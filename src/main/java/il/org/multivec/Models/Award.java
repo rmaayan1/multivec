@@ -8,7 +8,7 @@ import java.util.Set;
 @Entity
 @Table(name = "Awards", indexes = {
         @Index(columnList = "Award_Name"),
-        @Index(columnList = "IsDeleted")
+        @Index(columnList = "Is_Deleted")
 })
 public class Award {
     @Id
