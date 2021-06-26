@@ -25,7 +25,7 @@ import java.util.Set;
         @Index(columnList = "Danacode", unique = true),
         @Index(columnList = "Gefen_Award_Status"),
         @Index(columnList = "Gefen_Nomination_year"),
-        @Index(columnList = "IsDeleted")
+        @Index(columnList = "Is_Deleted")
 })
 public class Book {
     @Id

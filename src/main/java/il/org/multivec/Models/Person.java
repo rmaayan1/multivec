@@ -9,7 +9,7 @@ import java.util.Set;
 @Table (name = "Persons", indexes = {
         @Index(columnList = "First_Name"),
         @Index(columnList = "Last_Name"),
-        @Index(columnList = "IsDeleted")
+        @Index(columnList = "Is_Deleted")
 })
 public class Person {
     @Id
